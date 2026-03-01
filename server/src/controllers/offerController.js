@@ -10,4 +10,27 @@ const createOffer = async (req, res) => {
   res.status(201).json(offer);
 };
 
-module.exports = { getOffers, createOffer };
+const updateOffer = async (req, res) => {
+  const offer = await Offer.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
+
+  if (!offer) {
+    return res.status(404).json({ message: 'Offer not found' });
+  }
+
+  return res.json(offer);
+};
+
+const deleteOffer = async (req, res) => {
+  const offer = await Offer.findByIdAndDelete(req.params.id);
+
+  if (!offer) {
+    return res.status(404).json({ message: 'Offer not found' });
+  }
+
+  return res.status(204).send();
+};
+
+module.exports = { getOffers, createOffer, updateOffer, deleteOffer };

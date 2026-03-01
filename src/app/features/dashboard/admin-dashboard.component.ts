@@ -2,19 +2,34 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { 
+  faStar, 
+  faCalendar, 
+  faGift, 
+  faChartBar, 
+  faCog, 
+  faDoorOpen, 
+  faRotate, 
+  faDownload, 
+  faClock, 
+  faCheck, 
+  faTimes, 
+  faChartLine
+} from '@fortawesome/free-solid-svg-icons';
 import { Appointment, AppointmentService } from '../../core/services/appointment.service';
 import { AuthService } from '../../core/services/auth.service';
 import { OfferService } from '../../core/services/offer.service';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [ReactiveFormsModule, DatePipe, RouterLink],
+  imports: [ReactiveFormsModule, DatePipe, RouterLink, FaIconComponent],
   template: `<div class="admin-dashboard-wrapper">
       <!-- Enhanced Sidebar -->
       <aside class="admin-sidebar">
         <div class="sidebar-header">
           <div class="admin-logo">
-            <div class="logo-icon">✨</div>
+            <div class="logo-icon"><fa-icon [icon]="faStar"></fa-icon></div>
             <div class="logo-text">
               <h3>Glow Studio</h3>
               <span>Admin Panel</span>
@@ -26,20 +41,20 @@ import { OfferService } from '../../core/services/offer.service';
           <div class="nav-section">
             <h4 class="nav-title">Management</h4>
             <a routerLink="/admin" fragment="appointments" class="nav-link" [class.active]="activeTab() === 'appointments'" (click)="setActiveTab('appointments')">
-              <span class="nav-icon">📅</span>
+              <fa-icon [icon]="faCalendar" class="nav-icon"></fa-icon>
               <span>Appointments</span>
               <span class="nav-badge">{{ appointments().length }}</span>
             </a>
             <a routerLink="/admin" fragment="offers" class="nav-link" [class.active]="activeTab() === 'offers'" (click)="setActiveTab('offers')">
-              <span class="nav-icon">🎁</span>
+              <fa-icon [icon]="faGift" class="nav-icon"></fa-icon>
               <span>Offers</span>
             </a>
             <a routerLink="/admin" fragment="analytics" class="nav-link" [class.active]="activeTab() === 'analytics'" (click)="setActiveTab('analytics')">
-              <span class="nav-icon">📊</span>
+              <fa-icon [icon]="faChartBar" class="nav-icon"></fa-icon>
               <span>Analytics</span>
             </a>
             <a routerLink="/admin" fragment="settings" class="nav-link" [class.active]="activeTab() === 'settings'" (click)="setActiveTab('settings')">
-              <span class="nav-icon">⚙️</span>
+              <fa-icon [icon]="faCog" class="nav-icon"></fa-icon>
               <span>Settings</span>
             </a>
           </div>
@@ -54,7 +69,7 @@ import { OfferService } from '../../core/services/offer.service';
             </div>
           </div>
           <button class="logout-btn" (click)="auth.logout()">
-            <span class="logout-icon">🚪</span>
+            <fa-icon [icon]="faDoorOpen" class="logout-icon"></fa-icon>
             <span>Logout</span>
           </button>
         </div>
@@ -102,11 +117,11 @@ import { OfferService } from '../../core/services/offer.service';
             </div>
             <div class="section-actions">
               <button class="btn-secondary" (click)="loadAll()">
-                <span class="btn-icon">🔄</span>
+                <fa-icon [icon]="faRotate" class="btn-icon"></fa-icon>
                 Refresh
               </button>
               <button class="btn-primary" (click)="exportAppointments()">
-                <span class="btn-icon">📥</span>
+                <fa-icon [icon]="faDownload" class="btn-icon"></fa-icon>
                 Export
               </button>
             </div>
@@ -169,10 +184,10 @@ import { OfferService } from '../../core/services/offer.service';
                 
                 <div class="card-footer">
                   <select class="status-select" [value]="item.status" (change)="setStatus(item._id, $any($event.target).value)">
-                    <option value="pending">⏳ Pending</option>
-                    <option value="confirmed">✅ Confirmed</option>
-                    <option value="completed">✨ Completed</option>
-                    <option value="cancelled">❌ Cancelled</option>
+                    <option value="pending"><fa-icon [icon]="faClock"></fa-icon> Pending</option>
+                    <option value="confirmed"><fa-icon [icon]="faCheck"></fa-icon> Confirmed</option>
+                    <option value="completed"><fa-icon [icon]="faStar"></fa-icon> Completed</option>
+                    <option value="cancelled"><fa-icon [icon]="faTimes"></fa-icon> Cancelled</option>
                   </select>
                   <button class="btn-outline" (click)="viewAppointmentDetails(item)">
                     View Details
@@ -181,7 +196,7 @@ import { OfferService } from '../../core/services/offer.service';
               </div>
             } @empty {
               <div class="empty-state">
-                <div class="empty-icon">📅</div>
+                <div class="empty-icon"><fa-icon [icon]="faCalendar"></fa-icon></div>
                 <h3>No appointments found</h3>
                 <p>Appointments will appear here when customers book services.</p>
               </div>
@@ -233,7 +248,7 @@ import { OfferService } from '../../core/services/offer.service';
             
             <div class="form-actions">
               <button type="submit" class="btn-primary" [disabled]="offerForm.invalid">
-                <span class="btn-icon">🎁</span>
+                <fa-icon [icon]="faGift" class="btn-icon"></fa-icon>
                 Publish Offer
               </button>
               <button type="button" class="btn-secondary" (click)="offerForm.reset()">
@@ -280,7 +295,7 @@ import { OfferService } from '../../core/services/offer.service';
             <div class="analytics-card">
               <h3>Booking Trends</h3>
               <div class="chart-placeholder">
-                <div class="chart-icon">📈</div>
+                <div class="chart-icon"><fa-icon [icon]="faChartLine"></fa-icon></div>
                 <p>Booking trends over time</p>
               </div>
             </div>
@@ -305,11 +320,11 @@ import { OfferService } from '../../core/services/offer.service';
               <div class="revenue-stats">
                 <div class="revenue-item">
                   <span class="revenue-label">This Month</span>
-                  <span class="revenue-value">\${{ monthlyRevenue() }}</span>
+                  <span class="revenue-value">₹{{ monthlyRevenue() }}</span>
                 </div>
                 <div class="revenue-item">
                   <span class="revenue-label">This Year</span>
-                  <span class="revenue-value">\${{ yearlyRevenue() }}</span>
+                  <span class="revenue-value">₹{{ yearlyRevenue() }}</span>
                 </div>
               </div>
             </div>
@@ -330,20 +345,20 @@ import { OfferService } from '../../core/services/offer.service';
           <div class="settings-grid">
             <div class="setting-card">
               <h3>Business Information</h3>
-              <form class="settings-form">
+              <form class="settings-form" [formGroup]="businessSettings">
                 <div class="form-group">
                   <label class="form-label">Salon Name</label>
-                  <input type="text" class="form-input" value="Glow Studio" />
+                  <input type="text" class="form-input" formControlName="salonName" />
                 </div>
                 <div class="form-group">
                   <label class="form-label">Contact Email</label>
-                  <input type="email" class="form-input" value="info@glowstudio.com" />
+                  <input type="email" class="form-input" formControlName="contactEmail" />
                 </div>
                 <div class="form-group">
                   <label class="form-label">Phone Number</label>
-                  <input type="tel" class="form-input" value="+1 234 567 8900" />
+                  <input type="tel" class="form-input" formControlName="phoneNumber" />
                 </div>
-                <button type="button" class="btn-primary">Save Changes</button>
+                <button type="button" class="btn-primary" (click)="saveBusinessSettings()">Save Changes</button>
               </form>
             </div>
             
@@ -354,23 +369,78 @@ import { OfferService } from '../../core/services/offer.service';
                   <div class="hours-item">
                     <span class="day-name">{{ day.name }}</span>
                     <div class="hours-time">
-                      <input type="time" class="time-input" [value]="day.open" />
+                      <input type="time" class="time-input" [value]="day.open" disabled />
                       <span>to</span>
-                      <input type="time" class="time-input" [value]="day.close" />
+                      <input type="time" class="time-input" [value]="day.close" disabled />
                     </div>
                   </div>
                 }
               </div>
-              <button type="button" class="btn-primary">Update Hours</button>
+              <button type="button" class="btn-primary" (click)="updateHours()">Update Hours</button>
             </div>
           </div>
         </section>
+        }
+
+        @if (selectedAppointment(); as selected) {
+          <div class="modal-overlay" (click)="closeDetailsModal()">
+            <div class="modal-card appointment-modal" (click)="$event.stopPropagation()">
+              <div class="modal-header">
+                <h3>Appointment Details</h3>
+                <button type="button" class="modal-close" (click)="closeDetailsModal()">×</button>
+              </div>
+              <div class="modal-content">
+                <div class="detail-item">
+                  <span class="detail-label">Booking ID</span>
+                  <span class="detail-value">{{ selected._id }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Customer</span>
+                  <span class="detail-value">{{ selected.user?.name }} ({{ selected.user?.email }})</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Service</span>
+                  <span class="detail-value">{{ selected.service }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Stylist</span>
+                  <span class="detail-value">{{ selected.stylist }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Date & Time</span>
+                  <span class="detail-value">{{ selected.appointmentDate | date: 'full' }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Status</span>
+                  <span class="status-badge status-{{ selected.status }}">{{ selected.status }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Notes</span>
+                  <span class="detail-value">{{ selected.notes || 'No notes provided' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         }
       </main>
     </div>
   `
 })
 export class AdminDashboardComponent implements OnInit {
+  // FontAwesome icons
+  readonly faStar = faStar;
+  readonly faCalendar = faCalendar;
+  readonly faGift = faGift;
+  readonly faChartBar = faChartBar;
+  readonly faCog = faCog;
+  readonly faDoorOpen = faDoorOpen;
+  readonly faRotate = faRotate;
+  readonly faDownload = faDownload;
+  readonly faClock = faClock;
+  readonly faCheck = faCheck;
+  readonly faTimes = faTimes;
+  readonly faChartLine = faChartLine;
+
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly appointmentService = inject(AppointmentService);
@@ -381,6 +451,8 @@ export class AdminDashboardComponent implements OnInit {
   readonly recentOffers = signal<any[]>([]);
   readonly searchTerm = signal('');
   readonly statusFilter = signal('');
+  readonly editingOfferId = signal<string | null>(null);
+  readonly selectedAppointment = signal<Appointment | null>(null);
 
   readonly appointments = signal<Appointment[]>([]);
   readonly offerForm = this.fb.group({
@@ -390,12 +462,28 @@ export class AdminDashboardComponent implements OnInit {
     discountType: ['percentage', [Validators.required]],
     discountValue: [10, [Validators.required, Validators.min(1)]]
   });
+  readonly businessSettings = this.fb.group({
+    salonName: ['Glow Studio'],
+    contactEmail: ['info@glowstudio.com'],
+    phoneNumber: ['+1 234 567 8900']
+  });
 
   ngOnInit() {
     this.route.fragment.subscribe((fragment) => {
-      this.activeTab.set(fragment === 'offers' ? 'offers' : 'appointments');
+      if (
+        fragment === 'appointments' ||
+        fragment === 'offers' ||
+        fragment === 'analytics' ||
+        fragment === 'settings'
+      ) {
+        this.activeTab.set(fragment);
+        return;
+      }
+      this.activeTab.set('appointments');
     });
+    this.loadSettings();
     this.loadAll();
+    this.loadOffers();
   }
 
   setActiveTab(tab: 'appointments' | 'offers' | 'analytics' | 'settings') {
@@ -408,9 +496,17 @@ export class AdminDashboardComponent implements OnInit {
 
   postOffer() {
     if (this.offerForm.invalid) return;
-    this.offerService
-      .create(this.offerForm.getRawValue() as { title: string; description: string; validUntil: string })
-      .subscribe(() => this.offerForm.reset());
+    const payload = this.offerForm.getRawValue() as { title: string; description: string; validUntil: string };
+    const offerId = this.editingOfferId();
+    const request$ = offerId
+      ? this.offerService.update(offerId, payload)
+      : this.offerService.create(payload);
+
+    request$.subscribe(() => {
+      this.offerForm.reset({ discountType: 'percentage', discountValue: 10 });
+      this.editingOfferId.set(null);
+      this.loadOffers();
+    });
   }
 
   loadAll() {
@@ -418,6 +514,10 @@ export class AdminDashboardComponent implements OnInit {
       this.appointments.set(data);
       this.filteredAppointments.set(data);
     });
+  }
+
+  loadOffers() {
+    this.offerService.getAll().subscribe((offers) => this.recentOffers.set(offers));
   }
   
   filterByStatus(status: string) {
@@ -474,7 +574,11 @@ export class AdminDashboardComponent implements OnInit {
   }
   
   viewAppointmentDetails(appointment: Appointment) {
-    alert(`Appointment Details:\n\nCustomer: ${appointment.user?.name}\nEmail: ${appointment.user?.email}\nService: ${appointment.service}\nStylist: ${appointment.stylist}\nDate: ${new Date(appointment.appointmentDate).toLocaleString()}\nStatus: ${appointment.status}\nNotes: ${appointment.notes || 'None'}`);
+    this.selectedAppointment.set(appointment);
+  }
+
+  closeDetailsModal() {
+    this.selectedAppointment.set(null);
   }
   
   serviceStats() {
@@ -512,12 +616,40 @@ export class AdminDashboardComponent implements OnInit {
   }
   
   editOffer(offer: any) {
-    // Implementation for editing offers
-    console.log('Edit offer:', offer);
+    this.editingOfferId.set(offer._id);
+    this.offerForm.patchValue({
+      title: offer.title,
+      description: offer.description,
+      validUntil: String(offer.validUntil).slice(0, 10)
+    });
+    this.activeTab.set('offers');
   }
   
   deleteOffer(offerId: string) {
-    // Implementation for deleting offers
-    console.log('Delete offer:', offerId);
+    if (!confirm('Delete this offer?')) return;
+    this.offerService.remove(offerId).subscribe(() => {
+      if (this.editingOfferId() === offerId) {
+        this.editingOfferId.set(null);
+        this.offerForm.reset({ discountType: 'percentage', discountValue: 10 });
+      }
+      this.loadOffers();
+    });
+  }
+
+  saveBusinessSettings() {
+    localStorage.setItem('adminBusinessSettings', JSON.stringify(this.businessSettings.getRawValue()));
+    alert('Business information saved.');
+  }
+
+  updateHours() {
+    const current = this.workingDays();
+    localStorage.setItem('adminWorkingHours', JSON.stringify(current));
+    alert('Working hours updated.');
+  }
+
+  private loadSettings() {
+    const raw = localStorage.getItem('adminBusinessSettings');
+    if (!raw) return;
+    this.businessSettings.patchValue(JSON.parse(raw));
   }
 }

@@ -35,6 +35,12 @@ export const routes: Routes = [
       import('./features/dashboard/user-dashboard.component').then((m) => m.UserDashboardComponent)
   },
   {
+    path: 'appointments/:id',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/dashboard/appointment-detail.component').then((m) => m.AppointmentDetailComponent)
+  },
+  {
     path: 'admin',
     canActivate: [authGuard, roleGuard],
     data: { role: 'admin' },

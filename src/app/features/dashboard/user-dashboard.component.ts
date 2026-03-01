@@ -2,19 +2,34 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { 
+  faStar, 
+  faCalendar, 
+  faList, 
+  faDoorOpen, 
+  faRotate, 
+  faReceipt, 
+  faPrint, 
+  faFile, 
+  faUser,
+  faScissors,
+  faSpa,
+  faHandSparkles
+} from '@fortawesome/free-solid-svg-icons';
 import { Appointment, AppointmentService } from '../../core/services/appointment.service';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-user-dashboard',
-  imports: [ReactiveFormsModule, DatePipe, RouterLink],
+  imports: [ReactiveFormsModule, DatePipe, RouterLink, FaIconComponent],
   template: `
     <div class="user-dashboard-wrapper">
       <!-- Enhanced Sidebar -->
       <aside class="user-sidebar">
         <div class="sidebar-header">
           <div class="user-logo">
-            <div class="logo-icon">✨</div>
+            <div class="logo-icon"><fa-icon [icon]="faStar"></fa-icon></div>
             <div class="logo-text">
               <h3>Glow Studio</h3>
               <span>My Dashboard</span>
@@ -34,11 +49,11 @@ import { AuthService } from '../../core/services/auth.service';
           <div class="nav-section">
             <h4 class="nav-title">Quick Actions</h4>
             <a routerLink="/dashboard" fragment="booking" class="nav-link" [class.active]="activeTab() === 'booking'" (click)="setActiveTab('booking')">
-              <span class="nav-icon">📅</span>
+              <fa-icon [icon]="faCalendar" class="nav-icon"></fa-icon>
               <span>Book Appointment</span>
             </a>
             <a routerLink="/dashboard" fragment="appointments" class="nav-link" [class.active]="activeTab() === 'appointments'" (click)="setActiveTab('appointments')">
-              <span class="nav-icon">📋</span>
+              <fa-icon [icon]="faList" class="nav-icon"></fa-icon>
               <span>My Appointments</span>
               <span class="nav-badge">{{ appointments().length }}</span>
             </a>
@@ -47,7 +62,7 @@ import { AuthService } from '../../core/services/auth.service';
         
         <div class="sidebar-footer">
           <button class="logout-btn" (click)="auth.logout()">
-            <span class="logout-icon">🚪</span>
+            <fa-icon [icon]="faDoorOpen" class="logout-icon"></fa-icon>
             <span>Logout</span>
           </button>
         </div>
@@ -120,7 +135,7 @@ import { AuthService } from '../../core/services/auth.service';
                 
                 <div class="form-actions">
                   <button type="submit" class="btn-primary" [disabled]="form.invalid">
-                    <span class="btn-icon">📅</span>
+                    <fa-icon [icon]="faCalendar" class="btn-icon"></fa-icon>
                     Confirm Booking
                   </button>
                   <button type="button" class="btn-secondary" (click)="form.reset()">
@@ -133,7 +148,7 @@ import { AuthService } from '../../core/services/auth.service';
             <div class="receipt-card">
               <div class="receipt-header">
                 <h3>Booking Receipt</h3>
-                <div class="receipt-icon">🧾</div>
+                <div class="receipt-icon"><fa-icon [icon]="faReceipt"></fa-icon></div>
               </div>
               
               @if (lastBooked()) {
@@ -161,14 +176,14 @@ import { AuthService } from '../../core/services/auth.service';
                   
                   <div class="receipt-actions">
                     <button class="btn-secondary" (click)="downloadReceipt()">
-                      <span class="btn-icon">🖨️</span>
+                      <fa-icon [icon]="faPrint" class="btn-icon"></fa-icon>
                       Download Receipt
                     </button>
                   </div>
                 </div>
               } @else {
                 <div class="empty-receipt">
-                  <div class="empty-icon">📝</div>
+                  <div class="empty-icon"><fa-icon [icon]="faFile"></fa-icon></div>
                   <h4>No Recent Booking</h4>
                   <p>Complete a booking to see your receipt here</p>
                 </div>
@@ -188,7 +203,7 @@ import { AuthService } from '../../core/services/auth.service';
             </div>
             <div class="section-actions">
               <button class="btn-secondary" (click)="loadMine()">
-                <span class="btn-icon">🔄</span>
+                <fa-icon [icon]="faRotate" class="btn-icon"></fa-icon>
                 Refresh
               </button>
             </div>
@@ -200,11 +215,11 @@ import { AuthService } from '../../core/services/auth.service';
                 <div class="card-header">
                   <div class="appointment-icon">
                     @switch (item.service) {
-                      @case ('Bridal Makeup') { 💄 }
-                      @case ('Hair Styling') { 💇‍♀️ }
-                      @case ('Skincare & Spa') { 🧖‍♀️ }
-                      @case ('Nail Art') { 💅 }
-                      @default { ✨ }
+                      @case ('Bridal Makeup') { <fa-icon [icon]="faHandSparkles"></fa-icon> }
+                      @case ('Hair Styling') { <fa-icon [icon]="faScissors"></fa-icon> }
+                      @case ('Skincare & Spa') { <fa-icon [icon]="faSpa"></fa-icon> }
+                      @case ('Nail Art') { <fa-icon [icon]="faStar"></fa-icon> }
+                      @default { <fa-icon [icon]="faStar"></fa-icon> }
                     }
                   </div>
                   <div class="status-badge" [class]="'status-' + item.status">
@@ -216,11 +231,11 @@ import { AuthService } from '../../core/services/auth.service';
                   <h3 class="appointment-title">{{ item.service }}</h3>
                   <div class="appointment-details">
                     <div class="detail-item">
-                      <span class="detail-icon">👤</span>
+                      <fa-icon [icon]="faUser" class="detail-icon"></fa-icon>
                       <span class="detail-text">{{ item.stylist }}</span>
                     </div>
                     <div class="detail-item">
-                      <span class="detail-icon">📅</span>
+                      <fa-icon [icon]="faCalendar" class="detail-icon"></fa-icon>
                       <span class="detail-text">{{ item.appointmentDate | date: 'medium' }}</span>
                     </div>
                   </div>
@@ -234,11 +249,11 @@ import { AuthService } from '../../core/services/auth.service';
               </div>
             } @empty {
               <div class="empty-state">
-                <div class="empty-icon">📅</div>
+                <div class="empty-icon"><fa-icon [icon]="faCalendar"></fa-icon></div>
                 <h3>No appointments yet</h3>
                 <p>Book your first appointment to get started on your beauty journey!</p>
                 <a routerLink="/dashboard" fragment="booking" class="btn-primary" (click)="setActiveTab('booking')">
-                  <span class="btn-icon">📅</span>
+                  <fa-icon [icon]="faCalendar" class="btn-icon"></fa-icon>
                   Book First Appointment
                 </a>
               </div>
@@ -246,11 +261,62 @@ import { AuthService } from '../../core/services/auth.service';
           </div>
         </section>
         }
+
+        @if (selectedAppointment(); as selected) {
+          <div class="modal-overlay" (click)="closeDetailsModal()">
+            <div class="modal-card appointment-modal" (click)="$event.stopPropagation()">
+              <div class="modal-header">
+                <h3>Appointment Details</h3>
+                <button type="button" class="modal-close" (click)="closeDetailsModal()">×</button>
+              </div>
+              <div class="modal-content">
+                <div class="detail-item">
+                  <span class="detail-label">Booking ID</span>
+                  <span class="detail-value">{{ selected._id }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Service</span>
+                  <span class="detail-value">{{ selected.service }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Stylist</span>
+                  <span class="detail-value">{{ selected.stylist }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Date & Time</span>
+                  <span class="detail-value">{{ selected.appointmentDate | date: 'full' }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Status</span>
+                  <span class="status-badge status-{{ selected.status }}">{{ selected.status }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Notes</span>
+                  <span class="detail-value">{{ selected.notes || 'No notes provided' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
       </main>
     </div>
   `
 })
 export class UserDashboardComponent implements OnInit {
+  // FontAwesome icons
+  readonly faStar = faStar;
+  readonly faCalendar = faCalendar;
+  readonly faList = faList;
+  readonly faDoorOpen = faDoorOpen;
+  readonly faRotate = faRotate;
+  readonly faReceipt = faReceipt;
+  readonly faPrint = faPrint;
+  readonly faFile = faFile;
+  readonly faUser = faUser;
+  readonly faScissors = faScissors;
+  readonly faSpa = faSpa;
+  readonly faHandSparkles = faHandSparkles;
+
   private readonly fb = inject(FormBuilder);
   private readonly route = inject(ActivatedRoute);
   private readonly appointmentService = inject(AppointmentService);
@@ -266,6 +332,7 @@ export class UserDashboardComponent implements OnInit {
 
   readonly appointments = signal<Appointment[]>([]);
   readonly lastBooked = signal<Appointment | null>(null);
+  readonly selectedAppointment = signal<Appointment | null>(null);
 
   readonly form = this.fb.group({
     service: ['', [Validators.required]],
@@ -405,8 +472,10 @@ export class UserDashboardComponent implements OnInit {
   }
 
   viewDetails(appointment: Appointment) {
-    alert(
-      `Appointment Details\n\nService: ${appointment.service}\nStylist: ${appointment.stylist}\nDate: ${new Date(appointment.appointmentDate).toLocaleString()}\nStatus: ${appointment.status}`
-    );
+    this.selectedAppointment.set(appointment);
+  }
+
+  closeDetailsModal() {
+    this.selectedAppointment.set(null);
   }
 }

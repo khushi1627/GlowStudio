@@ -1,9 +1,25 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { 
+  faStar, 
+  faCalendar, 
+  faGift, 
+  faBolt, 
+  faFile, 
+  faGem, 
+  faLocationDot, 
+  faPhone, 
+  faClock,
+  faUser,
+  faScissors,
+  faSpa
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, FaIconComponent],
   template: `
     <section class="hero">
       <div class="hero-background">
@@ -13,7 +29,7 @@ import { CommonModule } from '@angular/common';
       </div>
       <div class="hero-content container">
         <div class="hero-badge">
-          <span class="badge-icon">✨</span>
+          <span class="badge-icon"><fa-icon [icon]="faStar"></fa-icon></span>
           <span>Welcome to GlowStudio</span>
         </div>
         <h1 class="hero-title">
@@ -40,25 +56,25 @@ import { CommonModule } from '@angular/common';
         </div>
         <div class="cta-row">
           <button class="btn primary hero-btn" (click)="navigateToBooking()">
-            <span class="btn-icon">📅</span>
+            <fa-icon [icon]="faCalendar" class="btn-icon"></fa-icon>
             Book Your Appointment
           </button>
           <button class="btn ghost hero-btn" (click)="navigateToOffers()">
-            <span class="btn-icon">🎁</span>
+            <fa-icon [icon]="faGift" class="btn-icon"></fa-icon>
             View Special Offers
           </button>
         </div>
         <div class="trust-badges">
           <div class="trust-item">
-            <span class="trust-icon">⚡</span>
+            <fa-icon [icon]="faBolt" class="trust-icon"></fa-icon>
             <span>Instant Booking</span>
           </div>
           <div class="trust-item">
-            <span class="trust-icon">📄</span>
+            <fa-icon [icon]="faFile" class="trust-icon"></fa-icon>
             <span>Digital Receipts</span>
           </div>
           <div class="trust-item">
-            <span class="trust-icon">💎</span>
+            <fa-icon [icon]="faGem" class="trust-icon"></fa-icon>
             <span>Premium Service</span>
           </div>
         </div>
@@ -74,7 +90,7 @@ import { CommonModule } from '@angular/common';
         <div class="services-grid">
           <div class="service-card" *ngFor="let service of services">
             <div class="service-icon">
-              <span [innerHTML]="service.icon"></span>
+              <fa-icon [icon]="service.icon"></fa-icon>
             </div>
             <h3>{{ service.title }}</h3>
             <p>{{ service.description }}</p>
@@ -141,17 +157,17 @@ import { CommonModule } from '@angular/common';
       <div class="container">
         <div class="contact-grid">
           <div class="contact-item">
-            <div class="contact-icon">📍</div>
+            <div class="contact-icon"><fa-icon [icon]="faLocationDot"></fa-icon></div>
             <h3>Visit Us</h3>
             <p>120 Rose Avenue, Los Angeles, CA</p>
           </div>
           <div class="contact-item">
-            <div class="contact-icon">📞</div>
+            <div class="contact-icon"><fa-icon [icon]="faPhone"></fa-icon></div>
             <h3>Call Us</h3>
             <p>(555) 123-4567</p>
           </div>
           <div class="contact-item">
-            <div class="contact-icon">🕐</div>
+            <div class="contact-icon"><fa-icon [icon]="faClock"></fa-icon></div>
             <h3>Hours</h3>
             <p>Mon-Sat: 9AM-8PM<br>Sun: 10AM-6PM</p>
           </div>
@@ -161,30 +177,46 @@ import { CommonModule } from '@angular/common';
   `
 })
 export class HomeComponent {
+  // FontAwesome icons
+  readonly faStar = faStar;
+  readonly faCalendar = faCalendar;
+  readonly faGift = faGift;
+  readonly faBolt = faBolt;
+  readonly faFile = faFile;
+  readonly faGem = faGem;
+  readonly faLocationDot = faLocationDot;
+  readonly faPhone = faPhone;
+  readonly faClock = faClock;
+  readonly faUser = faUser;
+  readonly faScissors = faScissors;
+  readonly faSpa = faSpa;
+
+  constructor(private readonly router: Router) {}
+
   services = [
     {
       title: 'Skincare Treatments',
       description: 'Rejuvenating facials and advanced skincare solutions',
       price: 'From ₹9,500',
-      icon: '✨'
+      icon: this.faStar
     },
     {
       title: 'Bridal Makeup',
       description: 'Professional makeup for your special day',
       price: 'From ₹20,000',
-      icon: '👰'
+      icon: this.faUser
     },
     {
       title: 'Hair Styling',
       description: 'Latest trends and timeless classics',
       price: 'From ₹6,500',
-      icon: '💇'
+      icon: this.faScissors
     },
     {
       title: 'Spa Sessions',
       description: 'Relaxing body treatments and massages',
       price: 'From ₹12,000',
-      icon: '🌸'
+      icon: this.faSpa
     }
   ];
 
@@ -210,12 +242,10 @@ export class HomeComponent {
   ];
 
   navigateToBooking() {
-    // Implementation for navigation to booking
-    console.log('Navigate to booking');
+    this.router.navigateByUrl('/register');
   }
 
   navigateToOffers() {
-    // Implementation for navigation to offers
-    console.log('Navigate to offers');
+    this.router.navigateByUrl('/offers');
   }
 }

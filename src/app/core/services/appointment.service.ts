@@ -30,6 +30,10 @@ export class AppointmentService {
     return this.http.get<Appointment[]>(this.api);
   }
 
+  getById(id: string) {
+    return this.http.get<Appointment>(`${this.api}/${id}`);
+  }
+
   updateStatus(id: string, status: Appointment['status']) {
     return this.http.patch<Appointment>(`${this.api}/${id}/status`, { status });
   }

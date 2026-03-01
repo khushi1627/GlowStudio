@@ -1,10 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faGift, faBolt, faCalendar, faSpa, faBell } from '@fortawesome/free-solid-svg-icons';
 import { Offer, OfferService } from '../../core/services/offer.service';
 
 @Component({
   selector: 'app-offers',
-  imports: [DatePipe],
+  imports: [DatePipe, FaIconComponent],
   template: `
     <section class="offers-page">
       <div class="offers-header">
@@ -19,12 +22,12 @@ import { Offer, OfferService } from '../../core/services/offer.service';
           <article class="offer-card" [class.expiring-soon]="isExpiringSoon(offer.validUntil)">
             <div class="card-header">
               <div class="offer-badge">
-                <span class="badge-icon">🎁</span>
+                <fa-icon [icon]="faGift" class="badge-icon"></fa-icon>
                 <span class="badge-text">Special Deal</span>
               </div>
               @if (isExpiringSoon(offer.validUntil)) {
                 <div class="urgency-badge">
-                  <span class="urgency-text">⚡ Expires Soon</span>
+                  <span class="urgency-text"><fa-icon [icon]="faBolt"></fa-icon> Expires Soon</span>
                 </div>
               }
             </div>
@@ -35,7 +38,7 @@ import { Offer, OfferService } from '../../core/services/offer.service';
               
               <div class="offer-footer">
                 <div class="validity-info">
-                  <span class="validity-icon">📅</span>
+                  <fa-icon [icon]="faCalendar" class="validity-icon"></fa-icon>
                   <span class="validity-text">Valid until {{ offer.validUntil | date: 'mediumDate' }}</span>
                 </div>
                 <button class="cta-button" (click)="bookNow(offer)">
@@ -46,11 +49,11 @@ import { Offer, OfferService } from '../../core/services/offer.service';
           </article>
         } @empty {
           <div class="empty-state">
-            <div class="empty-icon">🌸</div>
+            <div class="empty-icon"><fa-icon [icon]="faSpa"></fa-icon></div>
             <h3 class="empty-title">No Active Offers</h3>
             <p class="empty-description">We're preparing amazing new deals for you! Check back soon for exclusive promotions and beauty packages.</p>
             <button class="notify-button" (click)="notifyMe()">
-              🔔 Notify Me When Available
+              <fa-icon [icon]="faBell"></fa-icon> Notify Me When Available
             </button>
           </div>
         }
@@ -59,9 +62,19 @@ import { Offer, OfferService } from '../../core/services/offer.service';
   `
 })
 export class OffersComponent implements OnInit {
+  // FontAwesome icons
+  readonly faGift = faGift;
+  readonly faBolt = faBolt;
+  readonly faCalendar = faCalendar;
+  readonly faSpa = faSpa;
+  readonly faBell = faBell;
+
   readonly offers = signal<Offer[]>([]);
 
-  constructor(private readonly offerService: OfferService) {}
+  constructor(
+    private readonly offerService: OfferService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit() {
     this.offerService.getAll().subscribe({
@@ -78,12 +91,12 @@ export class OffersComponent implements OnInit {
   }
 
   bookNow(offer: Offer): void {
-    console.log('Booking offer:', offer.title);
-    // TODO: Implement booking logic or navigation
+    this.router.navigate(['/register'], {
+      queryParams: { offer: offer.title }
+    });
   }
 
   notifyMe(): void {
-    console.log('Notify me when offers are available');
-    // TODO: Implement notification subscription
+    this.router.navigateByUrl('/contact');
   }
 }

@@ -22,6 +22,17 @@ const allAppointments = async (req, res) => {
   res.json(data);
 };
 
+const getAppointmentById = async (req, res) => {
+  const appointment = await Appointment.findById(req.params.id).populate('user', 'name email');
+  if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
+
+  const isAdmin = req.user?.role === 'admin';
+  const isOwner = appointment.user?._id?.toString() === req.user?._id?.toString();
+  if (!isAdmin && !isOwner) return res.status(403).json({ message: 'Access denied' });
+
+  return res.json(appointment);
+};
+
 const updateStatus = async (req, res) => {
   const appointment = await Appointment.findByIdAndUpdate(
     req.params.id,
@@ -31,4 +42,4 @@ const updateStatus = async (req, res) => {
   res.json(appointment);
 };
 
-module.exports = { createAppointment, myAppointments, allAppointments, updateStatus };
+module.exports = { createAppointment, myAppointments, allAppointments, getAppointmentById, updateStatus };

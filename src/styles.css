@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;500;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
 :root {
   --bg: #fff8f3;
@@ -3490,4 +3491,66 @@ td {
   .hours-time {
     justify-content: space-between;
   }
+}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 16, 12, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  padding: 1rem;
+}
+
+.modal-card {
+  width: min(640px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: 18px;
+  border: 1px solid #f2dfd7;
+  background: #fffaf7;
+  box-shadow: 0 24px 60px rgba(43, 29, 24, 0.22);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f2dfd7;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.modal-close {
+  border: 0;
+  background: transparent;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #5a4038;
+}
+
+.modal-content {
+  padding: 1rem 1.25rem 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.appointment-modal .detail-item {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.appointment-modal .detail-label {
+  font-size: 0.82rem;
+  color: #6f5148;
+}
+
+.appointment-modal .detail-value {
+  color: #2b1d18;
+  word-break: break-word;
 }

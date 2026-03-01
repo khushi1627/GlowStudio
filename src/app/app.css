@@ -21,6 +21,19 @@
   font-size: 1.3rem;
   color: var(--ink);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo {
+  height: 100px;
+  width: auto;
+  border-radius: 8px;
+}
+
+.brand-text {
+  color: #bc3e3e;
+  font-size: 30px;
 }
 
 .nav-links {
@@ -317,6 +330,14 @@ main {
     align-items: flex-start;
     flex-direction: column;
     padding: 0.75rem 0;
+  }
+
+  .brand {
+    font-size: 1.1rem;
+  }
+
+  .brand-logo {
+    height: 32px;
   }
 
   .nav-links {

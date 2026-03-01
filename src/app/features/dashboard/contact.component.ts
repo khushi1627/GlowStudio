@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faLocationDot, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-contact',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, FaIconComponent],
   template: `
     <section class="contact-page">
       <div class="contact-hero">
@@ -28,7 +30,7 @@ import { CommonModule } from '@angular/common';
             <h2>Visit Our Studio</h2>
             <div class="contact-cards">
               <div class="contact-card primary">
-                <div class="card-icon">📍</div>
+                <div class="card-icon"><fa-icon [icon]="faLocationDot"></fa-icon></div>
                 <h3>Location</h3>
                 <p>
                   120 Rose Avenue<br>
@@ -45,7 +47,7 @@ import { CommonModule } from '@angular/common';
               </div>
               
               <div class="contact-card">
-                <div class="card-icon">📞</div>
+                <div class="card-icon"><fa-icon [icon]="faPhone"></fa-icon></div>
                 <h3>Phone</h3>
                 <p>
                   <a href="tel:+15550123456" class="contact-link">
@@ -60,7 +62,7 @@ import { CommonModule } from '@angular/common';
               </div>
               
               <div class="contact-card">
-                <div class="card-icon">✉️</div>
+                <div class="card-icon"><fa-icon [icon]="faEnvelope"></fa-icon></div>
                 <h3>Email</h3>
                 <p>
                   <a href="mailto:hello@glowstudio.com" class="contact-link">
@@ -179,4 +181,9 @@ import { CommonModule } from '@angular/common';
     </section>
   `
 })
-export class ContactComponent {}
+export class ContactComponent {
+  // FontAwesome icons
+  readonly faLocationDot = faLocationDot;
+  readonly faPhone = faPhone;
+  readonly faEnvelope = faEnvelope;
+}

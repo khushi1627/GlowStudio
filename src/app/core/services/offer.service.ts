@@ -22,4 +22,12 @@ export class OfferService {
   create(payload: { title: string; description: string; validUntil: string }) {
     return this.http.post<Offer>(this.api, payload);
   }
+
+  update(id: string, payload: { title: string; description: string; validUntil: string }) {
+    return this.http.put<Offer>(`${this.api}/${id}`, payload);
+  }
+
+  remove(id: string) {
+    return this.http.delete<void>(`${this.api}/${id}`);
+  }
 }

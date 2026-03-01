@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { faStar, faLeaf, faHeart, faLightbulb } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-about',
+  imports: [FaIconComponent],
   template: `
     <section class="about-page">
       <div class="about-hero">
@@ -58,7 +61,7 @@ import { Component } from '@angular/core';
           <h2 class="section-title">Our Values</h2>
           <div class="values-grid">
             <div class="value-card">
-              <div class="value-icon">✨</div>
+              <div class="value-icon"><fa-icon [icon]="faStar"></fa-icon></div>
               <h3>Excellence</h3>
               <p>
                 We pursue perfection in every treatment, using premium products and 
@@ -66,7 +69,7 @@ import { Component } from '@angular/core';
               </p>
             </div>
             <div class="value-card">
-              <div class="value-icon">🌿</div>
+              <div class="value-icon"><fa-icon [icon]="faLeaf"></fa-icon></div>
               <h3>Wellness</h3>
               <p>
                 Our holistic approach beauty nurtures both body and soul, promoting 
@@ -74,7 +77,7 @@ import { Component } from '@angular/core';
               </p>
             </div>
             <div class="value-card">
-              <div class="value-icon">💝</div>
+              <div class="value-icon"><fa-icon [icon]="faHeart"></fa-icon></div>
               <h3>Personalization</h3>
               <p>
                 Every client is unique, and we tailor our services to match your 
@@ -82,7 +85,7 @@ import { Component } from '@angular/core';
               </p>
             </div>
             <div class="value-card">
-              <div class="value-icon">🌟</div>
+              <div class="value-icon"><fa-icon [icon]="faLightbulb"></fa-icon></div>
               <h3>Innovation</h3>
               <p>
                 We stay ahead of industry trends, continuously learning and adopting 
@@ -148,4 +151,10 @@ import { Component } from '@angular/core';
     </section>
   `
 })
-export class AboutComponent {}
+export class AboutComponent {
+  // FontAwesome icons
+  readonly faStar = faStar;
+  readonly faLeaf = faLeaf;
+  readonly faHeart = faHeart;
+  readonly faLightbulb = faLightbulb;
+}
